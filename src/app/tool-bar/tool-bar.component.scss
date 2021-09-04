@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: var(--p-700);
+  color: var(--pc-700);
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  padding: 15px;
+}
+
+.menu {
+  background-color: var(--p-100);
+}
+
+a{
+  font-size: 10px;
+  margin: 5px;
+}
+

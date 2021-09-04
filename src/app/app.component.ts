@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'todo-app';
+  constructor() {
+    console.log("App component created");
+  }
 }

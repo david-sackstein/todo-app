@@ -23,6 +23,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "stylePreprocessorOptions": {
+              "includePaths": ["src", "src/styles"]
+            },
             "outputPath": "dist/todo-app",
             "index": "src/index.html",
             "main": "src/main.ts",

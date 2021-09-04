@@ -1,43 +1,56 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { filter, first, map, mergeMap, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { TodoItem } from '../models/todo-item.model';
 import { TodoList } from '../models/todo-list.model';
+import { TODO_ITEMS, TODO_LISTS } from './state-data';
 
 @Injectable({
   providedIn: 'root',
 })
-export class StateServiceService {
-  private _lastitemId = 0;
-  private _todoList: TodoList[] = [];
+export class StateService {
+
+  private _lastItemId = 0;
+  private _todoList: TodoList[] = TODO_LISTS;
   private _todoList$ = new BehaviorSubject<TodoList[]>(this._todoList);
 
-  todoList(): Observable<TodoList[]> {
+  private _lastListId = 0;
+  private _todoItems: TodoItem[] = TODO_ITEMS;
+  private _todoItems$ = new BehaviorSubject<TodoItem[]>(this._todoItems);
+
+  constructor() {
+    this._lastItemId = Math.max(...this._todoItems.map(item => item.id));
+    this._lastListId = Math.max(...this._todoList.map(item => item.id));
+  }
+
+  getTodoLists(): Observable<TodoList[]> {
     return this._todoList$.asObservable();
   }
 
-  private _lastListId = 0;
-  private _todoItems: TodoItem[] = [];
-  private _todoItems$ = new BehaviorSubject<TodoItem[]>(this._todoItems);
-
-  todoItems(): Observable<TodoItem[]> {
+  getTodoItems(): Observable<TodoItem[]> {
     return this._todoItems$.asObservable();
   }
 
   getItemsOfList(listId: number): Observable<TodoItem[]> {
-    return this.todoItems().pipe(
+    return this.getTodoItems().pipe(
       map((list) => list.filter((item) => item.listId == listId))
     );
   }
 
+  getIncompleteTodoItems(): Observable<TodoItem[]> {
+    return this.getTodoItems().pipe(
+      map((list) => list.filter((item) => item.isCompleted === false))
+    );
+  }
+
   getTodoList(listId: number): Observable<TodoList> {
-    return this.todoList().pipe(
+    return this.getTodoLists().pipe(
       map((list) => list.filter((item) => item.id == listId)[0])
     );
   }
 
   getTodoItem(itemId: number): Observable<TodoItem> {
-    return this.todoItems().pipe(
+    return this.getTodoItems().pipe(
       map((items) => items.filter((item) => item.id == itemId)[0])
     );
   }
@@ -64,7 +77,7 @@ export class StateServiceService {
   }
 
   AddTodoItem(listId: number, caption: string): Promise<number> {
-    const id = this._lastitemId + 1;
+    const id = this._lastItemId + 1;
 
     const item = {
       id: id,
@@ -115,6 +128,4 @@ export class StateServiceService {
 
     return Promise.resolve();
   }
-
-  constructor() {}
 }

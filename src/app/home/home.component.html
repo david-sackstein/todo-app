@@ -1,0 +1,43 @@
+<div class="header">
+  <span class="l1">Todo App</span>
+  <span class="l2">By David Sackstein</span>
+  <span class="l3">{{date| date}}</span>
+
+  <div class="buttons">
+    <button routerLink="/lists/-1/edit">Create new list</button>
+    <button>View all lists</button>
+    <button>View all items</button>
+  </div>
+</div>
+
+<ng-template let-name="name" let-observable="observable" let-icon="icon" #summary>
+  <div class="single-summary">
+    <mat-icon class="icon">{{icon}}</mat-icon>
+    <span class="value">{{observable | async}}</span>
+    <span class="name">{{name}}</span>
+  </div>
+</ng-template>
+
+<div class=summary>
+  <ng-container *ngTemplateOutlet="summary; context:{
+    name: 'Lists',
+    icon: 'list',
+    observable: toDoListsCount$
+  }">
+  </ng-container>
+
+  <ng-container *ngTemplateOutlet="summary; context:{
+    name: 'Items',
+    icon: 'done_all',
+    observable: toDoItemsCount$
+  }">
+  </ng-container>
+
+  <ng-container *ngTemplateOutlet="summary; context:{
+    name: 'Active Items',
+    icon: 'hourglass_empty',
+    observable: incompleteToDoCount$
+  }">
+  </ng-container>
+
+</div>
