@@ -1,1 +1,42 @@
-<p>list-edit works!</p>
+<div class="header">Edit List Details</div>
+<form [formGroup]="todoListForm" (ngSubmit)="submit()">
+  <span>Caption</span>
+  <input formControlName="caption">
+
+  <span>Description</span>
+  <textarea formControlName="description"></textarea>
+  <span>Icon</span>
+  <select formControlName="url"  class="material-icons">
+    <ng-container *ngFor="let url of urls">
+      <option>{{url}}</option>
+    </ng-container>
+  </select>
+
+  <span>Color</span>
+  <select formControlName="color">
+    <ng-container *ngFor="let color of colors">
+      <option [style.color]="color">{{color}}</option>
+    </ng-container>
+  </select>
+</form>
+
+<p>
+  <button [disabled]="todoListForm.invalid" (click)=submit()>Save</button>
+</p>
+
+<table border="2">
+  <thead>
+    <tr>
+      <th>Form Value</th>
+      <th>Data Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <td>
+      <pre>{{todoListForm.value | json}}</pre>
+    </td>
+    <td>
+      <pre>{{todoList | json}}</pre>
+    </td>
+  </tbody>
+</table>

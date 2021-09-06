@@ -9,7 +9,6 @@ import { TODO_ITEMS, TODO_LISTS } from './state-data';
   providedIn: 'root',
 })
 export class StateService {
-
   private _lastItemId = 0;
   private _todoList: TodoList[] = TODO_LISTS;
   private _todoList$ = new BehaviorSubject<TodoList[]>(this._todoList);
@@ -19,8 +18,8 @@ export class StateService {
   private _todoItems$ = new BehaviorSubject<TodoItem[]>(this._todoItems);
 
   constructor() {
-    this._lastItemId = Math.max(...this._todoItems.map(item => item.id));
-    this._lastListId = Math.max(...this._todoList.map(item => item.id));
+    this._lastItemId = Math.max(...this._todoItems.map((item) => item.id));
+    this._lastListId = Math.max(...this._todoList.map((item) => item.id));
   }
 
   getTodoLists(): Observable<TodoList[]> {
@@ -55,19 +54,21 @@ export class StateService {
     );
   }
 
-  AddList(
-    caption: string,
-    description: string,
-    color: string,
-    icon: string
-  ): Promise<number> {
-    const list: TodoList = {
+  createNewList(): TodoList {
+    return {
       id: this._lastListId + 1,
-      caption: caption,
-      description: description,
-      url: icon,
-      color: color,
-      image: icon,
+      caption: '',
+      description: '',
+      url: '',
+      color: '',
+      image: '',
+    };
+  }
+
+  AddList(todoList: TodoList): Promise<number> {
+    const list: TodoList = {
+      ...todoList,
+      id: this._lastListId + 1,
     };
 
     this._todoList = [...this._todoList, list];
@@ -92,26 +93,31 @@ export class StateService {
     return Promise.resolve(id);
   }
 
-  ModifyList(list: TodoList): Promise<void> {
+  UpdateList(newList: TodoList): Promise<void> {
+
+    this._todoList = this.Replace(
+      this._todoList,
+      (list) => list.id == list.id,
+      (list) => ({
+        ...list,
+        ...newList,
+      })
+    );
+
+    this._todoList$.next(this._todoList);
+
     return Promise.resolve();
   }
 
   MarkAsCompleted(itemId: number): Promise<void> {
-    const index = this._todoItems.findIndex((item) => item.id == itemId);
-    if (index == -1) {
-      return Promise.resolve();
-    }
-
-    const completedItem = {
-      ...this._todoItems[index],
-      isCompleted: true,
-    };
-
-    this._todoItems = [
-      ...this._todoItems.slice(0, index),
-      completedItem,
-      ...this._todoItems.slice(index + 1),
-    ];
+    this._todoItems = this.Replace(
+      this._todoItems,
+      (item) => item.id == itemId,
+      (item) => ({
+        ...item,
+        isCompleted: true,
+      })
+    );
 
     this._todoItems$.next(this._todoItems);
 
@@ -119,13 +125,29 @@ export class StateService {
   }
 
   DeleteList(listId: number): Promise<void> {
-
-    this._todoItems = this._todoItems.filter(item => item.listId != listId);
-    this._todoList = this._todoList.filter(item => item.id != listId);
+    this._todoItems = this._todoItems.filter((item) => item.listId != listId);
+    this._todoList = this._todoList.filter((item) => item.id != listId);
 
     this._todoList$.next(this._todoList);
     this._todoItems$.next(this._todoItems);
 
     return Promise.resolve();
+  }
+
+  private Replace<T>(
+    array: T[],
+    predicate: (item: T) => boolean,
+    replacer: (before: T) => T
+  ): T[] {
+    const foundIndex = array.findIndex(predicate);
+    if (foundIndex == -1) {
+      return array;
+    }
+
+    return array.map((item: T, index: number) => {
+      if (index != foundIndex)
+        return item;
+      return replacer(array[foundIndex]);
+    })
   }
 }

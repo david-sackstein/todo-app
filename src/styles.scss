@@ -3,6 +3,12 @@
 @include mat-common.main();
 
 
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
 html, body {
   height: 100%;
 }
@@ -13,8 +19,7 @@ body {
   background-color: var(--b-background);
 }
 
-* {
-  padding: 0px;
-  margin: 0px;
-  box-sizing: border-box;
+form .ng-invalid {
+  outline: none;
+  border: solid red 1px;
 }

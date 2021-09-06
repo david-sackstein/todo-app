@@ -11,6 +11,7 @@ import { ListEditComponent } from './list-edit/list-edit.component';
 import { ToolBarComponent } from './tool-bar/tool-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExportsModule } from './modules/mat-exports/mat-exports.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,8 @@ import { MatExportsModule } from './modules/mat-exports/mat-exports.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatExportsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
