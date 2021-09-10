@@ -27,7 +27,14 @@
     }
   }
 
-  .items {
-    margin-left: 12px;
+  .addtask {
+    display: flex;
+    flex-direction: row;
+    margin-left: 34px;
+
+    button {
+      margin-left: 4px;
+    }
   }
+
 }

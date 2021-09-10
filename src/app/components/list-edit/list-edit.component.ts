@@ -52,8 +52,8 @@ export class ListEditComponent implements OnInit {
         this.todoList.description,
         [
           Validators.required,
-          Validators.minLength(5), // at least 30 characters
-          Validators.pattern('^(\\b\\w+\\s*){2,}'), // at least 10 words
+          Validators.minLength(5), // at least 5 characters
+          Validators.pattern('(\\b\\w+\\s*){2,}'), // at least 2 words
         ],
       ],
       url: [this.todoList.url],
@@ -85,7 +85,10 @@ export class ListEditComponent implements OnInit {
   }
 
   save() {
-    this.todoList = this.todoListForm.value;
+    this.todoList = {
+      ...this.todoList,
+      ...this.todoListForm.value
+    }
     if (this.todoList.id == -1) {
       this.stateService.AddList(this.todoList);
     } else {

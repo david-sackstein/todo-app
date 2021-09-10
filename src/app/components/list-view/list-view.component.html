@@ -16,4 +16,8 @@
       <app-todo-item-presenter [todoItem]="item"></app-todo-item-presenter>
     </ng-container>
   </div>
+  <form class="addtask">
+    <input type="text" [formControl] = "newTaskControl">
+    <button (click)="addTask(todoList.id)" [disabled] = "! newTaskControl.valid">+</button>
+  </form>
 </div>

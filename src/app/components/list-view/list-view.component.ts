@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -12,13 +13,15 @@ import { StateService } from '../../modules/core/services/state-service';
   styleUrls: ['./list-view.component.scss'],
 })
 export class ListViewComponent implements OnInit {
+
   todoList$: Observable<TodoList>;
   todoItems$: Observable<TodoItem[]>;
+  newTaskControl: FormControl;
 
   constructor(
-    stateService: StateService,
+    private stateService: StateService,
+    formBuilder: FormBuilder,
     route: ActivatedRoute,
-    private router: Router
   ) {
     this.todoList$ = route.params.pipe(
       switchMap((params) => {
@@ -32,15 +35,14 @@ export class ListViewComponent implements OnInit {
         return stateService.getItemsOfList(list.id);
       })
     );
+
+    this.newTaskControl = formBuilder.control('', [Validators.required, Validators.minLength(10)]);
   }
 
-  createNewList() {
-    this.router.navigateByUrl("/lists/-1/edit");
+  addTask(id: number) {
+    this.stateService.AddTodoItem(id, this.newTaskControl.value);
+    this.newTaskControl.reset()
   }
 
-  editList() {
-    this.router.navigateByUrl("/lists/-1/edit");
-  }
-
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }
