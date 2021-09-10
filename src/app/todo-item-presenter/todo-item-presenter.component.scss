@@ -1,0 +1,14 @@
+label {
+  margin: 10px;
+}
+
+input[type=checkbox] {
+  vertical-align: middle;
+  position: relative;
+  bottom: 1px;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+  opacity: 0.5;
+}

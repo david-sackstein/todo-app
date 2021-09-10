@@ -54,16 +54,6 @@ export class StateService {
     );
   }
 
-  createNewList(): TodoList {
-    return {
-      id: this._lastListId + 1,
-      caption: '',
-      description: '',
-      url: '',
-      color: '',
-    };
-  }
-
   AddList(todoList: TodoList): Promise<number> {
     const list: TodoList = {
       ...todoList,

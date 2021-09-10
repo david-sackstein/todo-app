@@ -13,7 +13,7 @@
   </select>
 
   <span>Color</span>
-  <select formControlName="color">
+  <select formControlName="color" [style.color]="getFormColor()">
     <ng-container *ngFor="let color of colors">
       <option [style.color]="color">{{color}}</option>
     </ng-container>

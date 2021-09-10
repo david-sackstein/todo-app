@@ -1,7 +1,7 @@
 <div class="header">Lists</div>
 
 <div class="list-of-lists">
-  <div class="list" *ngFor="let list of lists | async" routerLink="/lists/{{list.id}}/edit">
+  <div class="list" *ngFor="let list of lists | async" routerLink="/lists/{{list.id}}">
     <mat-icon [style.color]="list.color">{{list.url}}</mat-icon>
     <span>{{list.caption}}</span>
   </div>

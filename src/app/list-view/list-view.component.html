@@ -1,0 +1,19 @@
+<div class="listview" *ngIf="todoList$ | async as todoList">
+  <span [style.color]="todoList.color">Lists -> {{todoList.caption}}</span>
+  <div class="description">
+    <mat-icon [style.color]="todoList.color">{{todoList.url}}</mat-icon>
+    <div>
+      <span>{{todoList.description}}</span>
+      <div class="buttons">
+        <button routerLink="/lists/-1/edit">New List</button>
+        <button routerLink="/lists/{{todoList.id}}/edit">Edit</button>
+        <button>Delete</button>
+      </div>
+    </div>
+  </div>
+  <div class="items">
+    <ng-container *ngFor="let item of todoItems$ | async">
+      <app-todo-item-presenter [todoItem]="item"></app-todo-item-presenter>
+    </ng-container>
+  </div>
+</div>

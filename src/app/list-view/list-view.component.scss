@@ -1,0 +1,33 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.listview {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+
+  .description {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0px;
+
+    mat-icon {
+      height: fit-content;
+      width: fit-content;
+      font-size: 50px;
+      margin-right: 10px;
+    }
+
+    button {
+      margin: 10px 10px 0 0;
+      width: 60px;
+    }
+  }
+
+  .items {
+    margin-left: 12px;
+  }
+}

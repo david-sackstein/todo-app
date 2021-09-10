@@ -19,17 +19,17 @@ import { StateService } from '../modules/core/services/state-service';
 export class ListEditComponent implements OnInit {
   private todoList$: Observable<TodoList>;
 
+  title$ : Observable<String>;
+  colors = ['red', 'orange', 'green', 'blue', 'indigo', 'violet'];
+  urls = ['work', 'list', 'watch_later', 'alarm'];
+
   todoList: TodoList = {
     id: -1,
     caption: '',
     description: '',
-    url: '',
-    color: '',
+    url: this.urls[0],
+    color: this.colors[0],
   };
-
-  title$ : Observable<String>;
-  colors = ['red', 'orange', 'green', 'blue', 'indigo', 'violet'];
-  urls = ['work', 'list', 'watch_later', 'alarm'];
 
   todoListForm: FormGroup;
 
@@ -76,7 +76,7 @@ export class ListEditComponent implements OnInit {
   getToList(params: Params) {
     const id = +params['id'];
     return id == -1
-      ? of(this.stateService.createNewList())
+      ? of(this.todoList)
       : this.stateService.getTodoList(id);
   }
 

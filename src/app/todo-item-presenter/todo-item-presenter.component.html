@@ -1,0 +1,4 @@
+<div *ngIf="todoItem as item">
+  <input type="checkbox" id="iscompleted" [checked]="item.isCompleted" (change)="changed($event)">
+  <label [class.strikethrough]="item.isCompleted" for #iscompleted>{{item.caption}}</label>
+</div>
