@@ -23,7 +23,19 @@
 
     button {
       margin: 10px 10px 0 0;
-      width: 60px;
+      min-width: 60px;
+      padding: 2px 4px;
+      border: solid 0.5px black;
+      border-radius: 5px;
+      box-sizing: border-box;
+
+      &.cancel {
+        background-color: lightblue;
+      }
+
+      &.confirm {
+        background-color: var(--p-100);
+      }
     }
   }
 
@@ -36,5 +48,4 @@
       margin-left: 4px;
     }
   }
-
 }
