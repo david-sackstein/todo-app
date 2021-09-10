@@ -1,1 +1,12 @@
-<p>lists works!</p>
+<div class="header">Lists</div>
+
+<div class="list-of-lists">
+  <div class="list" *ngFor="let list of lists | async" routerLink="/lists/{{list.id}}/edit">
+    <mat-icon [style.color]="list.color">{{list.url}}</mat-icon>
+    <span>{{list.caption}}</span>
+  </div>
+  <div class="list" routerLink="/lists/-1/edit">
+    <mat-icon>playlist_add</mat-icon>
+    <span>New...</span>
+  </div>
+</div>

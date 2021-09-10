@@ -61,7 +61,6 @@ export class StateService {
       description: '',
       url: '',
       color: '',
-      image: '',
     };
   }
 

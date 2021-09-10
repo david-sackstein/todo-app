@@ -1,14 +1,14 @@
-<div class="header">Edit List Details</div>
-<form [formGroup]="todoListForm" (ngSubmit)="submit()">
+<div class="header">{{title$ | async}}</div>
+<form [formGroup]="todoListForm">
   <span>Caption</span>
   <input formControlName="caption">
 
   <span>Description</span>
   <textarea formControlName="description"></textarea>
   <span>Icon</span>
-  <select formControlName="url"  class="material-icons">
-    <ng-container *ngFor="let url of urls">
-      <option>{{url}}</option>
+  <select formControlName="url" class="material-icons" [style.color]="getFormColor()">
+    <ng-container *ngFor="let url of urls" >
+      <option [value]="url" class="material-icons" [style.color]="getFormColor()">{{url}}</option>
     </ng-container>
   </select>
 
@@ -21,10 +21,10 @@
 </form>
 
 <p>
-  <button [disabled]="todoListForm.invalid" (click)=submit()>Save</button>
+  <button [disabled]="todoListForm.invalid" (click)=save()>Save</button>
 </p>
 
-<table border="2">
+<!-- <table border="2">
   <thead>
     <tr>
       <th>Form Value</th>
@@ -39,4 +39,4 @@
       <pre>{{todoList | json}}</pre>
     </td>
   </tbody>
-</table>
+</table> -->

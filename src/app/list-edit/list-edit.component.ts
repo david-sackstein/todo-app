@@ -23,13 +23,13 @@ export class ListEditComponent implements OnInit {
     id: -1,
     caption: '',
     description: '',
-    image: '',
     url: '',
     color: '',
   };
 
-  colors = ['red', 'orange', 'green', 'blue', 'indigo', 'violet']
-  urls = ['work', 'list', 'watch_later', 'alarm']
+  title$ : Observable<String>;
+  colors = ['red', 'orange', 'green', 'blue', 'indigo', 'violet'];
+  urls = ['work', 'list', 'watch_later', 'alarm'];
 
   todoListForm: FormGroup;
 
@@ -42,29 +42,35 @@ export class ListEditComponent implements OnInit {
       switchMap((params) => this.getToList(params))
     );
 
+    this.title$ = route.params.pipe(
+      map((params) => this.getTitle(params))
+    )
+
     this.todoListForm = formBuilder.group({
       caption: [this.todoList.caption, [Validators.required]],
-      description: [this.todoList.description, [
-        Validators.required,
-        Validators.minLength(5), // at least 30 characters
-        Validators.pattern('^(\\b\\w+\\s*){2,}') // at least 10 words
-      ]],
+      description: [
+        this.todoList.description,
+        [
+          Validators.required,
+          Validators.minLength(5), // at least 30 characters
+          Validators.pattern('^(\\b\\w+\\s*){2,}'), // at least 10 words
+        ],
+      ],
       url: [this.todoList.url],
       color: [this.todoList.color],
     });
 
     this.todoList$.subscribe((list) => {
       this.todoList = list;
+      this.todoListForm.patchValue(list);
     });
   }
 
-  submit() {
-    this.todoList = this.todoListForm.value;
-    if (this.todoList.id == -1) {
-      this.stateService.AddList(this.todoList);
-    } else {
-      this.stateService.UpdateList(this.todoList);
-    }
+  getTitle(params: Params) {
+    const id = +params['id'];
+    return id == -1
+      ? 'Add new List'
+      : 'Edit list details';
   }
 
   getToList(params: Params) {
@@ -72,6 +78,19 @@ export class ListEditComponent implements OnInit {
     return id == -1
       ? of(this.stateService.createNewList())
       : this.stateService.getTodoList(id);
+  }
+
+  getFormColor() {
+    return this.todoListForm.controls['color'].value;
+  }
+
+  save() {
+    this.todoList = this.todoListForm.value;
+    if (this.todoList.id == -1) {
+      this.stateService.AddList(this.todoList);
+    } else {
+      this.stateService.UpdateList(this.todoList);
+    }
   }
 
   ngOnInit(): void {}

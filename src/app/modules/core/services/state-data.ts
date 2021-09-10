@@ -4,27 +4,24 @@ import { TodoList } from 'src/app/modules/core/models/todo-list.model';
 export const TODO_LISTS: TodoList[] = [
   {
     id: 1,
-    caption: 'Wake up',
+    caption: 'Morning',
     description: 'Tasks I do in the morning',
-    image: '',
-    url: '',
-    color: '',
+    url: 'alarm',
+    color: 'red',
   },
   {
     id: 2,
-    caption: 'Take kids to school',
+    caption: 'Kids',
     description: 'Tasks I do to prepare the kids for school',
-    image: '',
-    url: '',
-    color: '',
+    url: 'watch_later',
+    color: 'orange',
   },
   {
     id: 3,
-    caption: 'Work Items',
+    caption: 'Work',
     description: 'Tasks I do every day at work',
-    image: '',
-    url: '',
-    color: '',
+    url: 'work',
+    color: 'yello',
   },
 ];
 
