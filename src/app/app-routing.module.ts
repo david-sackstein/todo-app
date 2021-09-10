@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { ItemsComponent } from './items/items.component';
-import { ListEditComponent } from './list-edit/list-edit.component';
-import { ListViewComponent } from './list-view/list-view.component';
-import { ListsComponent } from './lists/lists.component';
+import { HomeComponent } from './components/home/home.component';
+import { ItemsComponent } from './components/items/items.component';
+import { ListEditComponent } from './components/list-edit/list-edit.component';
+import { ListViewComponent } from './components/list-view/list-view.component';
+import { ListsComponent } from './components/lists/lists.component';
 import { NoListsGuard } from './modules/core/guards/no-lists.guard';
 
 const routes: Routes = [

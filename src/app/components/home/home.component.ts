@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StateService } from '../modules/core/services/state-service';
+import { StateService } from '../../modules/core/services/state-service';
 
 /*
 Implement the home page.

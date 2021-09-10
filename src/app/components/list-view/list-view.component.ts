@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { TodoItem } from '../modules/core/models/todo-item.model';
-import { TodoList } from '../modules/core/models/todo-list.model';
-import { StateService } from '../modules/core/services/state-service';
+import { TodoItem } from '../../modules/core/models/todo-item.model';
+import { TodoList } from '../../modules/core/models/todo-list.model';
+import { StateService } from '../../modules/core/services/state-service';
 
 @Component({
   selector: 'app-list',

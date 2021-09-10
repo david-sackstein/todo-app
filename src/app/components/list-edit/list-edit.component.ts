@@ -8,8 +8,8 @@ import {
 import { ActivatedRoute, Params, Router, RouterState } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { TodoList } from '../modules/core/models/todo-list.model';
-import { StateService } from '../modules/core/services/state-service';
+import { TodoList } from '../../modules/core/models/todo-list.model';
+import { StateService } from '../../modules/core/services/state-service';
 
 @Component({
   selector: 'app-list-edit',
