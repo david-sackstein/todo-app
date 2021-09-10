@@ -1,1 +1,9 @@
-<p>items works!</p>
+<div class="header">
+  Active items
+  <span *ngIf="allCompleted$ | async">You do not have any incomplete items</span>
+</div>
+
+<ng-container *ngFor="let uncompleted of incompleteItems$ | async">
+  <app-todo-item-presenter [todoItem]="uncompleted" (onCompleteChanged)="onCompleteChanged($event)">
+  </app-todo-item-presenter>
+</ng-container>
