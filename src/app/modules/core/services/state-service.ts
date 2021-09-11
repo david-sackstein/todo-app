@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TodoItem } from '../models/todo-item.model';
 import { TodoList } from '../models/todo-list.model';
@@ -33,6 +33,14 @@ export class StateService {
   getItemsOfList(listId: number): Observable<TodoItem[]> {
     return this.getTodoItems().pipe(
       map((list) => list.filter((item) => item.listId == listId))
+    );
+  }
+
+  getListOfItem(itemId: number) : Observable<TodoList | undefined> {
+    return combineLatest([this.getTodoLists(), this.getTodoItem(itemId)]).pipe(
+      map(([lists, item]) => {
+        return lists.find((list) => list.id == item.listId);
+      })
     );
   }
 
@@ -83,7 +91,6 @@ export class StateService {
   }
 
   UpdateList(newList: TodoList): Promise<void> {
-
     this._todoList = this.Replace(
       this._todoList,
       (list) => list.id == list.id,
@@ -134,9 +141,8 @@ export class StateService {
     }
 
     return array.map((item: T, index: number) => {
-      if (index != foundIndex)
-        return item;
+      if (index != foundIndex) return item;
       return replacer(array[foundIndex]);
-    })
+    });
   }
 }
